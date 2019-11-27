@@ -2,8 +2,19 @@ var mongoose = require('mongoose');
 
 var alunoSchema = mongoose.Schema({
     matricula: Number,
-    name: String,
-    email: String,
+    name: {
+        type: String, 
+        lowercase: true, 
+        required: [true, "Não pode ficar em branco"], 
+        match: [/^[a-zA-Z0-9]+$/, 'É inválido']
+
+    },
+    email: {
+        type: String,
+         lowercase: true, 
+         required: [true, "Não pode ficar em branco"], 
+         match: [/\S+@\S+\.\S+/, 'É inválido']
+    },
     telefone: String,
     data_nascimento: Date,
     cursos: Array,
