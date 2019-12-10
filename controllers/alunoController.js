@@ -22,7 +22,7 @@ exports.new = function (req, res) {
         var aluno = new Aluno();
      
         aluno.matricula = req.body.matricula;
-        aluno.name = req.body.name ? req.body.name : aluno.name;
+        aluno.nome = req.body.nome;
         aluno.email = req.body.email;
         aluno.cpf = req.body.cpf;
         aluno.telefone = req.body.telefone;
@@ -64,13 +64,13 @@ exports.view = function (req, res) {
 exports.update = function (req, res) {
     try {
         Aluno.findById(req.params.aluno_id, function (err, aluno) {
-            aluno.matricula = req.body.matricula;
-            aluno.name = req.body.name ? req.body.name : aluno.name;
-            aluno.email = req.body.email;
-            aluno.cpf = req.body.cpf;
-            aluno.telefone = req.body.telefone;
-            aluno.data_nascimento = req.body.data_nascimento;
-            aluno.cursos = req.body.cursos;
+            aluno.matricula = aluno.matricula;
+            aluno.nome = req.body.nome ? req.body.nome : aluno.nome;
+            aluno.email = req.body.email ? req.body.email : aluno.email;
+            aluno.cpf = req.body.cpf ? req.body.cpf : aluno.cpf;
+            aluno.telefone = req.body.telefone ? req.body.telefone : aluno.telefone;
+            aluno.data_nascimento = req.body.data_nascimento ? req.body.data_nascimento : aluno.data_nascimento;
+            aluno.cursos = req.body.cursos ? req.body.cursos : aluno.cursos;
 
             aluno.save(function (err) {
                 res.json({

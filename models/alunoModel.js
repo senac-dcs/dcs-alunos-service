@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var alunoSchema = mongoose.Schema({
     matricula: Number,
-    name: {
+    nome: {
         type: String, 
         lowercase: true, 
         required: [true, "Não pode ficar em branco"], 
