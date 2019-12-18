@@ -5,10 +5,10 @@ routes.get('/status', (req, res) => {
     res.status(200).json({ message: 'All good!' });
 });
 
-routes.route('/')
+routes.route('/v1')
     .get(alunoController.all)
     .post(alunoController.new);
-routes.route('/:aluno_id')
+routes.route('/v1/:aluno_id')
     .get(alunoController.view)
     .patch(alunoController.update)
     .put(alunoController.update)
