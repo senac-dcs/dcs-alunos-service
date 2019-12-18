@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
 
 var alunoSchema = mongoose.Schema({
-    matricula: Number,
+    matricula: {
+        type: Number,
+        index: {unique: true}
+    },
     nome: {
         type: String, 
         lowercase: true, 

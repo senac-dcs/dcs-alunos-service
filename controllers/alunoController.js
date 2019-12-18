@@ -1,3 +1,4 @@
+const https = require("https");
 let Aluno = require('../models/alunoModel');
 
 exports.all = function (req, res) {
@@ -21,7 +22,7 @@ exports.new = function (req, res) {
     try {
         var aluno = new Aluno();
      
-        aluno.matricula = req.body.matricula;
+        aluno.matricula = 123;
         aluno.nome = req.body.nome;
         aluno.email = req.body.email;
         aluno.cpf = req.body.cpf;
@@ -49,7 +50,7 @@ exports.view = function (req, res) {
         Aluno.findById(req.params.aluno_id, function (err, aluno) {
             res.json({
                 status:"Sucesso",
-                message: 'Carregando detalhes...',
+                message: "Exibindo detalhes!",
                 data: aluno
             });
         });
@@ -75,7 +76,7 @@ exports.update = function (req, res) {
             aluno.save(function (err) {
                 res.json({
                     status: "Sucesso",
-                    message: 'Dados atualizados!',
+                    message: "Dados atualizados!",
                     data: aluno
                 });
             });
@@ -95,7 +96,7 @@ exports.delete = function (req, res) {
         }, function (err) {
             res.json({
                 status: "Successo",
-                message: 'Deletado!'
+                message: "Deletado!"
             });
         }
         );
@@ -103,6 +104,77 @@ exports.delete = function (req, res) {
         res.json({
             status: "Erro",
             message: err,
+        });
+    }
+};
+
+exports.viewCourse = function (req, res) {
+    try{
+        Aluno.findById(req.params.aluno_id, function (err, aluno) {
+            var curso = aluno.cursos.filter(function(c) {
+                return c.curso_id === req.params.curso_id
+            });
+
+            res.json({
+                status: "Successo",
+                message: "Exibindo detalhes do curso!",
+                data: curso
+            });
+        });
+    } catch (err) {
+        res.json({
+            status: "Erro",
+            message: err
+        });
+    }
+};
+
+exports.addCourse = function (req, res) {
+    try{
+        var url = process.env.API_URL+"/cursos/"+req.params.curso_id
+        https.get(url, res => {
+            var curso = res.body.data;
+            
+            Aluno.findById(req.params.aluno_id, function (err, aluno) {
+                aluno.cursos.push(curso);
+    
+                aluno.save(function (err) {
+                    res.json({
+                        status: "Sucesso",
+                        message: "Adicionado o curso com sucesso!",
+                        data: aluno
+                    });
+                });
+            });
+        });
+    } catch (err) {
+        res.json({
+            status: "Erro",
+            message: err
+        });
+    }
+};
+
+exports.deleteCourse = function (req, res) {
+    try{
+        Aluno.findById(req.params.aluno_id, function (err, aluno) {
+            var cursos = aluno.cursos.filter(function(c) {
+                return c.curso_id !== req.params.curso_id
+            });
+            aluno.cursos = cursos;
+            
+            aluno.save(function (err) {
+                res.json({
+                    status: "Sucesso",
+                    message: "Removido o curso com sucesso!",
+                    data: aluno
+                });
+            });
+        });
+    } catch (err) {
+        res.json({
+            status: "Erro",
+            message: err
         });
     }
 };

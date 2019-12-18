@@ -13,10 +13,9 @@ routes.route('/alunos/:aluno_id')
     .patch(alunoController.update)
     .put(alunoController.update)
     .delete(alunoController.delete);
-// routes.route('/api/:aluno_id/:curso_id')
-//     .get(alunoController.view)
-//     .patch(alunoController.update)
-//     .put(alunoController.update)
-//     .delete(alunoController.delete);
+routes.route('/alunos/:aluno_id/:curso_id')
+    .get(alunoController.viewCourse)
+    .post(alunoController.addCourse)
+    .delete(alunoController.deleteCourse);
 
 module.exports = routes;
