@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -22,5 +23,5 @@ app.use('/', routes);
 
 dbs.connect;
 
-app.set('port', 3000);
+app.set('port', process.env.APP_PORT);
 app.listen(app.get('port'), () => console.log('app is running on '+app.get('port')));
