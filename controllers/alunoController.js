@@ -22,7 +22,7 @@ exports.new = function (req, res) {
     try {
         var aluno = new Aluno();
      
-        aluno.matricula = 123;
+        aluno.matricula = req.body.matricula;
         aluno.nome = req.body.nome;
         aluno.email = req.body.email;
         aluno.cpf = req.body.cpf;
